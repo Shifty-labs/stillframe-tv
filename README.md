@@ -23,9 +23,22 @@ One project builds two editions:
 
 Lite excludes the native video implementation, plugin API, Apple video trust configuration and Internet permission. Full also releases its video decoder when using photos; Lite should not be treated as a guaranteed large RAM saving.
 
+## Download and install
+
+Download one APK from the [latest release](https://github.com/Shifty-labs/stillframe-tv/releases/latest):
+
+- **[Download Lite](https://github.com/Shifty-labs/stillframe-tv/releases/download/v0.27.0/stillframe-lite-0.27.0.apk)** — photos, gradients and icon packs; no video wallpaper plugins.
+- **[Download Full](https://github.com/Shifty-labs/stillframe-tv/releases/download/v0.27.0/stillframe-full-0.27.0.apk)** — includes local video wallpapers and compatible Overflight providers.
+
+For Android TV / Google TV running Android 8.0 or newer; not Samsung Tizen or LG webOS. No source-code build is needed. Transfer the APK to your TV with USB or a file-transfer app, open it in a file manager, and allow that app to install unknown apps if prompted. You can revoke that permission afterwards. Alternatively install over ADB; see [step-by-step setup](docs/SETUP.md).
+
+Open StillFrame and test app launching and your remote before making it Home. Keep the original TV launcher installed for recovery. Full's third-party wallpaper plugin and videos are separate downloads.
+
+**Earlier development installs:** these releases use a new private release key and cannot update debug-signed builds in place. Do not uninstall your working Home launcher without a fallback; uninstalling also removes settings. Your existing installation can continue working. Future public releases will use the same release key for in-place updates.
+
 ## Status
 
-Experimental development version **0.26.0**. The preceding Full implementation was tested on NVIDIA Shield with Android 11. These new Full/Lite packages need device validation. Sharp TV testing is pending.
+Experimental development version **0.27.0**. The preceding Full implementation was tested on NVIDIA Shield with Android 11. Full and Lite have launched in an Android TV emulator. Lite 0.26 was also tested on a Sharp AQUOS running Android 14, including app launch, Home and user-reported standby/wake. The release-signed 0.27 packages need wider device testing.
 
 The shareable source includes original CSS gradients instead of the personal installation's stock-photo collection. Import your own images through Appearance → Wallpaper gallery. Third-party icon packs, plugin APKs, aerial videos and account data are not bundled.
 

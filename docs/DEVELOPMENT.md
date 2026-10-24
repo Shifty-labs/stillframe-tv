@@ -13,6 +13,6 @@ Use JDK 21, Android SDK Platform 35 and the checked-in wrapper:
 python3 scripts/check-source.py
 ```
 
-Keep SDK paths, local media, signing keys and build outputs out of Git. GitHub Actions builds both debug variants and uploads test APK artifacts. Release signing and public release publishing are not configured yet.
+Keep SDK paths, local media, signing keys and build outputs out of Git. GitHub Actions builds both debug variants and uploads test APK artifacts. Public release APKs are built separately and signed locally with a private persistent release key; GitHub Actions does not have that key. Release assets include APK SHA-256 checksums and the public signing-certificate fingerprint. Never upload the keystore or its password.
 
 Packaging validation compiles both variants and checks Lite's manifest/DEX/assets for absence of video and provider code. Device validation should cover remote navigation, Home/Back, persistence, photo imports, icon packs, optional VPN setup and Full's video lifecycle/failure fallback.
