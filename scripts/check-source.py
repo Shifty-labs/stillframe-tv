@@ -10,7 +10,7 @@ for name in filter(None, tracked):
         raise SystemExit(f'Local configuration must not be committed: {name}')
     if path.suffix in ('.jks', '.keystore', '.apk'):
         raise SystemExit(f'Private key or generated APK must not be committed: {name}')
-    if path.suffix in ('.png', '.jpg', '.jpeg', '.webp') and name != 'docs/screenshots/full-dock.png':
+    if path.suffix in ('.png', '.jpg', '.jpeg', '.webp') and name not in ('docs/screenshots/full-dock.png', 'docs/screenshots/list-left.png'):
         raise SystemExit(f'Raster asset needs a distribution review: {name}')
     if path.suffix in ('.cer', '.jar', '.png'):
         continue

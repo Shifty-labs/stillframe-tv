@@ -2,6 +2,12 @@
 
 A calm Android TV Home launcher with a clock, favourite apps, configurable layouts and remote-first settings. Projectivy Launcher is not required.
 
+![StillFrame TV — dock layout](docs/screenshots/full-dock.png)
+
+![StillFrame TV — list left layout](docs/screenshots/list-left.png)
+
+*Actual Android TV emulator screenshots, showing the dock and list-left layouts with an original StillFrame gradient.*
+
 One project builds two editions:
 
 | Feature | Full | Lite |
@@ -61,9 +67,3 @@ See [setup and recovery](docs/SETUP.md), [wallpapers](docs/WALLPAPERS.md), [Prot
 ## Licensing
 
 An open-source license for the original StillFrame code has not yet been selected. Repository visibility alone does not grant reuse rights. Third-party API notices and their Apache-2.0 license remain included in Full; see [notices](NOTICE.md).
-
-## Screenshot
-
-Actual Android 16 TV emulator, with its default apps and an original StillFrame gradient.
-
-![StillFrame Full dock](docs/screenshots/full-dock.png)
