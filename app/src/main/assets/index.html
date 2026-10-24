@@ -598,6 +598,7 @@ window.tvRemote=function(key){
   }else{
    if(key==='up'&&(prefs.layout==='dock'||homeIndex===0)){navArea='toolbar';toolbarIndex=0}
    else if(prefs.layout!=='dock'){
+    if(key==='right'){navArea='toolbar';toolbarIndex=2}
     if(key==='up')homeIndex=Math.max(0,homeIndex-1);
     if(key==='down')homeIndex=Math.min(homeItems().length-1,homeIndex+1);
    }else{
