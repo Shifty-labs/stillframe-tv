@@ -1,0 +1,27 @@
+# StillFrame nature collection v1
+
+Optional downloads for Full and Lite. These are alternatives to the original personal-use Pexels collection, not the same photographs. No video or Overflight content is included. Images are Wikimedia 1920px derivatives; StillFrame further resizes and crops them for display. Each photo and its adaptations retain the licence below. No photographer endorses StillFrame.
+
+## Forest waterfall
+- File: `forest-waterfall.jpg`
+- Author: Diliff
+- Source: https://commons.wikimedia.org/wiki/File:Hopetoun_falls.jpg
+- Licence: [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+- Downloaded derivative: https://thumb.wikimedia.org/wikipedia/commons/thumb/3/36/Hopetoun_falls.jpg/1920px-Hopetoun_falls.jpg
+- SHA-256: `afc9ddf298d06298520e981f5b7fb7d9c89a6de68e8bd8363091c59405cc7fcd`
+
+## Alpine lake
+- File: `alpine-lake.jpg`
+- Author: Mokozza
+- Source: https://commons.wikimedia.org/wiki/File:Moraine_lake_view.jpg
+- Licence: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
+- Downloaded derivative: https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Moraine_lake_view.jpg/1920px-Moraine_lake_view.jpg
+- SHA-256: `58add90dd978ae55f808798c2e96fa51058f2aa35045f39e7726e809321a5bce`
+
+## Yosemite valley
+- File: `yosemite-valley.jpg`
+- Author: Diliff
+- Source: https://commons.wikimedia.org/wiki/File:Tunnel_View,_Yosemite_Valley,_Yosemite_NP_-_Diliff.jpg
+- Licence: [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+- Downloaded derivative: https://thumb.wikimedia.org/wikipedia/commons/thumb/1/13/Tunnel_View%2C_Yosemite_Valley%2C_Yosemite_NP_-_Diliff.jpg/1920px-Tunnel_View%2C_Yosemite_Valley%2C_Yosemite_NP_-_Diliff.jpg
+- SHA-256: `897668a94c10d3c4925d92324eb9c80559be1c8956138c7a7017682d6a2feebb`

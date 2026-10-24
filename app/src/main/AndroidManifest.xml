@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Discover only activities explicitly advertising a TV or regular launcher. -->
     <queries>
+        <intent><action android:name="android.appwidget.action.APPWIDGET_BIND" /></intent>
         <intent><action android:name="android.net.VpnService" /></intent>
         <package android:name="ch.protonvpn.android" />
         <intent><action android:name="org.adw.launcher.THEMES" /></intent>
@@ -18,6 +19,7 @@
         </intent>
     </queries>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-feature android:name="android.software.leanback" android:required="true" />
     <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
     <application

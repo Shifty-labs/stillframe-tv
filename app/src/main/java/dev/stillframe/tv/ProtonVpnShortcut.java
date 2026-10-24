@@ -130,12 +130,10 @@ final class ProtonVpnShortcut {
             if(widget==null){
                 if(widgetId==-1){widgetId=host.allocateAppWidgetId();prefs.edit().putInt("vpnWidgetId",widgetId).apply();}
                 if(manager.getAppWidgetInfo(widgetId)==null && !manager.bindAppWidgetIdIfAllowed(widgetId,provider)){
-                    android.content.Intent approve=new android.content.Intent(AppWidgetManager.ACTION_APPWIDGET_BIND)
-                        .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,widgetId).putExtra(AppWidgetManager.EXTRA_APPWIDGET_PROVIDER,provider);
-                    if(approve.resolveActivity(activity.getPackageManager())!=null)activity.startActivity(approve);
-                    else new android.app.AlertDialog.Builder(activity).setTitle("One-time VPN control setup")
-                        .setMessage("This TV needs ADB approval to host the selected VPN widget:\n\nadb shell appwidget grantbind --package "+activity.getPackageName()+" --user 0\n\nAfter setup, press the VPN button again.")
-                        .setPositiveButton("OK",null).show();
+                    new android.app.AlertDialog.Builder(activity).setTitle("Enable VPN controls?")
+                        .setMessage("Allow StillFrame to use "+VpnWidgetSupport.label(activity,selectedPackage)+"'s connection widget? StillFrame does not receive your VPN password. Android may ask you to approve the widget. Some TVs require a one-time ADB setup instead. This step will not connect or disconnect your VPN.")
+                        .setPositiveButton("Continue",(dialog,which)->requestWidgetApproval())
+                        .setNegativeButton("Cancel",null).show();
                     requested.accept("error");return;
                 }
                 attach();
@@ -144,6 +142,16 @@ final class ProtonVpnShortcut {
             resume();pending=true;deadline=SystemClock.elapsedRealtime()+15000;
             message(wantDisconnect?"Requesting VPN disconnect…":"Preparing VPN connection…");handler.postDelayed(retry,250);
         }catch(Exception e){pending=false;message("Could not prepare the VPN shortcut");requested.accept("error");}
+    }
+
+    private void requestWidgetApproval(){
+        android.content.Intent approve=new android.content.Intent(AppWidgetManager.ACTION_APPWIDGET_BIND)
+            .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,widgetId).putExtra(AppWidgetManager.EXTRA_APPWIDGET_PROVIDER,provider);
+        try{if(approve.resolveActivity(activity.getPackageManager())!=null){activity.startActivity(approve);return;}}
+        catch(android.content.ActivityNotFoundException|SecurityException ignored){}
+        new android.app.AlertDialog.Builder(activity).setTitle("One-time TV setup")
+            .setMessage("This TV does not provide Android's widget approval screen. From a computer connected to this TV over ADB, run:\n\nadb shell appwidget grantbind --package "+activity.getPackageName()+" --user 0\n\nThen press the VPN icon again. This approval lets StillFrame bind widgets; it does not grant VPN credentials or Android VPN consent.")
+            .setPositiveButton("OK",null).show();
     }
 
     private void collect(View v,List<TextView> texts){

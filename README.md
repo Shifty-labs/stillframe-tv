@@ -17,18 +17,19 @@ One project builds two editions:
 | Favourites, rearranging and app visibility | ✓ | ✓ |
 | Android icon packs and per-app icon selection | ✓ | ✓ |
 | Gradient backgrounds and imported photos | ✓ | ✓ |
+| Optional nature photo downloads (saved offline) | ✓ | ✓ |
 | Selectable VPN widget controls (Proton tested) | ✓ | ✓ |
 | Local video wallpapers | ✓ | — |
 | Overflight / API-v1 video providers | ✓ | — |
 
-Lite excludes the native video implementation, plugin API, Apple video trust configuration and Internet permission. Full also releases its video decoder when using photos; Lite should not be treated as a guaranteed large RAM saving.
+Lite excludes the native video implementation, plugin API and Apple video trust configuration. Full also releases its video decoder when using photos; Lite should not be treated as a guaranteed large RAM saving.
 
 ## Download and install
 
 Download one APK from the [latest release](https://github.com/Shifty-labs/stillframe-tv/releases/latest):
 
-- **[Download Lite](https://github.com/Shifty-labs/stillframe-tv/releases/download/v0.27.0/stillframe-lite-0.27.0.apk)** — photos, gradients and icon packs; no video wallpaper plugins.
-- **[Download Full](https://github.com/Shifty-labs/stillframe-tv/releases/download/v0.27.0/stillframe-full-0.27.0.apk)** — includes local video wallpapers and compatible Overflight providers.
+- **[Download Lite](https://github.com/Shifty-labs/stillframe-tv/releases/download/v0.28.0/stillframe-lite-0.28.0.apk)** — photos, gradients and icon packs; no video wallpaper plugins.
+- **[Download Full](https://github.com/Shifty-labs/stillframe-tv/releases/download/v0.28.0/stillframe-full-0.28.0.apk)** — includes local video wallpapers and compatible Overflight providers.
 
 For Android TV / Google TV running Android 8.0 or newer; not Samsung Tizen or LG webOS. No source-code build is needed. Transfer the APK to your TV with USB or a file-transfer app, open it in a file manager, and allow that app to install unknown apps if prompted. You can revoke that permission afterwards. Alternatively install over ADB; see [step-by-step setup](docs/SETUP.md).
 
@@ -38,9 +39,9 @@ Open StillFrame and test app launching and your remote before making it Home. Ke
 
 ## Status
 
-Experimental development version **0.27.0**. The preceding Full implementation was tested on NVIDIA Shield with Android 11. Full and Lite have launched in an Android TV emulator. Lite 0.26 was also tested on a Sharp AQUOS running Android 14, including app launch, Home and user-reported standby/wake. The release-signed 0.27 packages need wider device testing.
+Experimental development version **0.28.0**. The preceding Full implementation was tested on NVIDIA Shield with Android 11. Full and Lite have launched in an Android TV emulator. Lite 0.26 was also tested on a Sharp AQUOS running Android 14, including app launch, Home and user-reported standby/wake. The release-signed packages need wider device testing.
 
-The shareable source includes original CSS gradients instead of the personal installation's stock-photo collection. Import your own images through Appearance → Wallpaper gallery. Third-party icon packs, plugin APKs, aerial videos and account data are not bundled.
+The shareable source includes original CSS gradients instead of the personal installation's stock-photo collection. Use **Appearance → Download nature wallpapers** for three optional licensed photos, or import your own images through Appearance → Wallpaper gallery. Photos download only when requested and work offline afterwards. Both editions now request Internet permission; Lite still contains no video or Overflight implementation. See [nature photo credits](docs/NATURE-WALLPAPERS.md). Third-party icon packs, plugin APKs, aerial videos and account data are not bundled.
 
 ## Build
 
@@ -74,6 +75,7 @@ Test app launching and remote controls before choosing StillFrame as Home. Keep 
 - Home closes StillFrame menus.
 - Play/Pause manages favourites where indicated.
 - Settings → Appearance contains layout, wallpaper and icon controls.
+- First use of VPN controls explains widget permission. Continue opens Android approval where available, or one-time ADB instructions on TVs without that screen.
 
 See [setup and recovery](docs/SETUP.md), [wallpapers](docs/WALLPAPERS.md), [Proton VPN](docs/PROTON-VPN.md), [development](docs/DEVELOPMENT.md), [laptop preview](docs/LAPTOP-PREVIEW.md), and [known limitations](docs/KNOWN-ISSUES.md).
 

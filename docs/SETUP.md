@@ -18,8 +18,8 @@ For a TV exposing the traditional ADB port, replace DEVICE_ADDRESS below with it
 ```sh
 adb connect DEVICE_ADDRESS:5555
 adb devices -l
-adb -s DEVICE_ADDRESS:5555 install -r stillframe-lite-0.27.0.apk
-# Or: adb -s DEVICE_ADDRESS:5555 install -r stillframe-full-0.27.0.apk
+adb -s DEVICE_ADDRESS:5555 install -r stillframe-lite-0.28.0.apk
+# Or: adb -s DEVICE_ADDRESS:5555 install -r stillframe-full-0.28.0.apk
 ```
 
 Always target the intended TV when multiple devices are connected. Disable debugging afterwards if you no longer need it.

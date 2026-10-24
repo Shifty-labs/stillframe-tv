@@ -1,7 +1,7 @@
 # Development
 
-- `app/src/main`: shared launcher, local HTML UI, photo/icon features, network indicators and Proton widget integration.
-- `app/src/full`: video player/controller, provider API, Internet permission, video trust configuration and notices.
+- `app/src/main`: shared launcher, local HTML UI, photo/icon features, network indicators and VPN widget integration, plus an opt-in hash-checked nature-photo downloader. Both editions declare Internet permission.
+- `app/src/full`: video player/controller, provider API, video trust configuration and notices.
 - `app/src/lite`: photo-only controller and Lite label.
 
 The bootstrap exposes the edition's video capability to the UI. Lite hides video controls and excludes the implementation from its APK.

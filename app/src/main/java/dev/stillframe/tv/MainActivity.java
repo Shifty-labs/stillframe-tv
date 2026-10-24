@@ -61,6 +61,7 @@ public class MainActivity extends Activity {
     private WebView web;
     private WallpaperSources wallpaperSources;
     private ProtonVpnShortcut protonShortcut;
+    private NatureWallpapers natureWallpapers;
     private IconPackSupport iconPacks;
     private IconAppearancePicker iconPicker;
     private String iconPackId = "";
@@ -330,6 +331,14 @@ public class MainActivity extends Activity {
         }
 
         /** Open Android's document picker; it grants access only to the chosen image. */
+        @JavascriptInterface public void downloadNatureWallpapers(){
+            runOnUiThread(()->{
+                if(natureWallpapers==null)natureWallpapers=new NatureWallpapers(MainActivity.this,MainActivity.this::getImportedMetadata,
+                    (file,item)->importImage(Uri.fromFile(file),item,file),MainActivity.this::selectImportedWallpaper);
+                natureWallpapers.choose();
+            });
+        }
+
         @JavascriptInterface public void importWallpaper() {
             runOnUiThread(() -> {
                 if (getImportedMetadata().length() >= MAX_IMPORTS) {
@@ -493,14 +502,21 @@ public class MainActivity extends Activity {
         super.onActivityResult(request, result, data);
         if(wallpaperSources.result(request,result,data))return;
         if (request != PICK_WALLPAPER || result != RESULT_OK || data == null || data.getData() == null) return;
-        Uri uri = data.getData();
+        importImage(data.getData(),null,null);
+    }
+
+    private void selectImportedWallpaper(JSONObject entry){
+        if(web!=null)web.evaluateJavascript("window.onWallpaperImported("+entry.toString()+")",null);
+    }
+
+    private void importImage(Uri uri,JSONObject nature,File temporaryDownload){
         new Thread(() -> {
             File full = null, thumb = null;
             try {
                 ContentResolver resolver = getContentResolver();
                 String mime = resolver.getType(uri);
                 if (mime != null && !mime.startsWith("image/")) throw new IOException("Not an image");
-                String name = safeImageName(uri);
+                String name = nature==null?safeImageName(uri):nature.getString("name");
                 Bitmap decoded;
                 if (Build.VERSION.SDK_INT >= 28) {
                     ImageDecoder.Source source = ImageDecoder.createSource(resolver, uri);
@@ -542,6 +558,7 @@ public class MainActivity extends Activity {
                     if (small != decoded) small.recycle();
                 } finally { decoded.recycle(); }
                 JSONObject entry = new JSONObject(); entry.put("id", id); entry.put("name", name);
+                if(nature!=null){entry.put("natureId",nature.getString("id"));entry.put("author",nature.getString("author"));entry.put("license",nature.getString("license"));entry.put("source",nature.getString("source"));entry.put("licenseUrl",nature.getString("licenseUrl"));}
                 synchronized (importsLock) {
                     JSONArray old = getImportedMetadata();
                     if (old.length() >= MAX_IMPORTS) throw new IOException("Wallpaper gallery is full (20 imports)");
@@ -557,7 +574,7 @@ public class MainActivity extends Activity {
                 runOnUiThread(() -> Toast.makeText(MainActivity.this,
                         "Import failed: " + (failure.getMessage() == null ? "try a smaller JPG" : failure.getMessage()),
                         Toast.LENGTH_LONG).show());
-            }
+            } finally {if(temporaryDownload!=null)temporaryDownload.delete();}
         }, "StillFrameWallpaperImport").start();
     }
 

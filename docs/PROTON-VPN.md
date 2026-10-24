@@ -2,7 +2,7 @@
 
 The indicator reports Android's VPN transport. The button delegates to Proton VPN's own widget; StillFrame does not store Proton credentials or implement a VPN.
 
-Install Proton, sign in there, connect once to complete Android VPN consent, and set Quick Connect to Fastest. On Shield, the one-time widget-host setup used was:
+Install Proton, sign in there, connect once to complete Android VPN consent, and set Quick Connect to Fastest. On first use, **Enable VPN controls? → Continue** opens Android’s widget approval screen where the TV supports it. Cancel leaves VPN control disabled. Approval does not connect the VPN; press the icon again afterwards. On TVs without that system screen, StillFrame shows the one-time ADB command. For example:
 
 ```sh
 adb shell appwidget grantbind --package dev.stillframe.tv --user 0

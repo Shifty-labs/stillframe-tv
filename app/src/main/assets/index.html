@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>StillFrame TV v0.26</title>
+<title>StillFrame TV v0.28</title>
 <style>
 :root{--ink:#f7f9f8;--dim:rgba(255,255,255,.72);--panel:rgba(9,21,27,.95);--outline:rgba(255,255,255,.23);--accent:#e9e5d7}
 *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#11232b;color:var(--ink);font-family:Arial,"Helvetica Neue",sans-serif}
@@ -134,7 +134,7 @@ html.videoWallpaper,html.videoWallpaper body{background:transparent}html.videoWa
  <div id="reorderBanner" role="status" aria-live="polite">Move with arrows · OK to save · Back to cancel</div>
 </main>
 <section id="overlay" aria-label="StillFrame menus">
- <div class="overlayHead"><div><h2 id="panelTitle">Your apps</h2><p id="panelHint">OK to open · Play/Pause to pin · Back to close</p></div><div class="corner">STILLFRAME / 0.26</div></div>
+ <div class="overlayHead"><div><h2 id="panelTitle">Your apps</h2><p id="panelHint">OK to open · Play/Pause to pin · Back to close</p></div><div class="corner">STILLFRAME / 0.28</div></div>
  <nav id="appGrid" aria-label="Installed applications"></nav>
  <nav id="settingsList" aria-label="Settings"></nav>
  <nav id="visibilityList" aria-label="Manage visibility of installed apps"></nav>
@@ -165,6 +165,7 @@ var settings=[
 {title:'Next video wallpaper',kind:'nextVideo'},
 {title:'Wallpaper provider settings',kind:'providerSettings'},
 {title:'Wallpaper gallery',kind:'gallery'},
+{title:'Download nature wallpapers',kind:'natureDownloads'},
 {title:'Rotate favourite wallpapers',kind:'rotation',options:[0,15,30,60],labels:['Off','Every 15 minutes','Every 30 minutes','Every hour']},
 {title:'Home layout',kind:'layout',options:['dock','listLeft','listRight'],labels:['Dock','List left','List right']},
 {title:'Favourite app slots',kind:'dockSize',options:[6,8],labels:['6 apps (default)','8 apps']},
@@ -182,7 +183,7 @@ var settings=[
 {title:'Back to Home',kind:'done'}
 ];
 var settingsPage='main';
-var appearanceKinds=['wallpaperSource','nextVideo','providerSettings','gallery','rotation','layout','dockSize','dockWidth','dockHeight','iconPack','iconShape','showDockLabels','brand'];
+var appearanceKinds=['wallpaperSource','nextVideo','providerSettings','gallery','natureDownloads','rotation','layout','dockSize','dockWidth','dockHeight','iconPack','iconShape','showDockLabels','brand'];
 function currentSettings(){
  if(settingsPage==='appearance')return settings.filter(function(s){return appearanceKinds.indexOf(s.kind)>=0&&(supportsVideoWallpapers||['wallpaperSource','nextVideo','providerSettings'].indexOf(s.kind)<0)}).concat([{title:'Back to Settings',kind:'parentSettings'}]);
  return [{title:'Appearance',kind:'appearance'}].concat(settings.filter(function(s){return appearanceKinds.indexOf(s.kind)<0}));
@@ -370,7 +371,7 @@ function renderApps(){
  });
  var focus=grid.children[appIndex];if(focus)focus.scrollIntoView({block:'nearest',inline:'nearest'});
 }
-function settingValue(s){if(s.kind==='vpnSettings')return vpnProviderName+' →';if(s.kind==='wallpaperSource')return mediaWallpaperSource+' →';if(s.kind==='nextVideo')return 'Next →';if(s.kind==='providerSettings')return 'Open →';if(s.kind==='appearance')return 'Open →';if(s.kind==='parentSettings')return 'Back →';if(s.kind==='visibility')return prefs.hiddenApps.length+' hidden  →';if(s.options){var index=s.options.indexOf(prefs[s.kind]);return s.labels[Math.max(0,index)]}return s.kind==='gallery'?'Browse →':s.kind==='apps'?'Choose →':s.kind==='rearrange'?'Start moving →':s.kind==='androidsettings'?'Open →':'Close'}
+function settingValue(s){if(s.kind==='natureDownloads')return 'Browse →';if(s.kind==='vpnSettings')return vpnProviderName+' →';if(s.kind==='wallpaperSource')return mediaWallpaperSource+' →';if(s.kind==='nextVideo')return 'Next →';if(s.kind==='providerSettings')return 'Open →';if(s.kind==='appearance')return 'Open →';if(s.kind==='parentSettings')return 'Back →';if(s.kind==='visibility')return prefs.hiddenApps.length+' hidden  →';if(s.options){var index=s.options.indexOf(prefs[s.kind]);return s.labels[Math.max(0,index)]}return s.kind==='gallery'?'Browse →':s.kind==='apps'?'Choose →':s.kind==='rearrange'?'Start moving →':s.kind==='androidsettings'?'Open →':'Close'}
 function renderSettings(){
  $('panelTitle').textContent=settingsPage==='appearance'?'Appearance':'Settings';$('panelHint').textContent=settingsPage==='appearance'?'Choose a setting · OK to change · Back to Settings':'Choose a setting · OK to open · Back for Home';
  var list=$('settingsList');var previousScroll=list.scrollTop;list.replaceChildren();
@@ -457,6 +458,7 @@ function chooseWallpaper(){
 window.onWallpaperImported=function(entry){
  if(!entry || !/^user-[0-9a-f-]{36}$/.test(entry.id))return;
  if(!validWallpaper(entry.id))wallpapers.push({id:entry.id,name:String(entry.name||'My wallpaper').slice(0,45),path:'',photo:true,imported:true});
+ if(window.StillFrameAndroid)window.StillFrameAndroid.usePhotoWallpaper();
  prefs.wallpaper=entry.id;
  if(!prefs.wallpaperFavourites.includes(entry.id))prefs.wallpaperFavourites.push(entry.id);
  wallIndex=wallpaperList().findIndex(function(w){return w.id===entry.id});
@@ -499,6 +501,7 @@ function toggleAppFavourite(){var a=visibleApps()[appIndex];if(!a)return;var ind
  if(index>=0){prefs.favourites.splice(index,1);toast('Removed '+a.name)}
  else{if(prefs.favourites.length>=prefs.dockSize){toast('Dock full · choose '+(prefs.dockSize===6?'8 slots in Settings':'another favourite')+' first');return}prefs.favourites.push(a.id);toast('Added '+a.name)}persist();homeIndex=Math.max(0,Math.min(homeIndex,homeItems().length-1));render()}
 function activateSetting(){var s=currentSettings()[settingIndex];if(!s)return;
+ if(s.kind==='natureDownloads'){if(window.StillFrameAndroid)window.StillFrameAndroid.downloadNatureWallpapers();else toast('Nature downloads are available in the Android app');return}
  if(s.kind==='vpnSettings'){if(window.StillFrameAndroid&&window.StillFrameAndroid.chooseVpnProvider)window.StillFrameAndroid.chooseVpnProvider();else toast('VPN control setup is available in the Android app');return}
  if(s.kind==='wallpaperSource'){if(window.StillFrameAndroid)window.StillFrameAndroid.chooseWallpaperSource();return}
  if(s.kind==='nextVideo'){if(window.StillFrameAndroid)window.StillFrameAndroid.nextVideoWallpaper();return}

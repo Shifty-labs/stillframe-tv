@@ -15,3 +15,9 @@ Provider settings opens the provider's quality/filter controls. Streaming uses i
 Supported providers advertise `tv.projectivy.plugin.WALLPAPER_PROVIDER`, export their service, and declare API version 1. Current support covers time-elapsed requests and video entries, with up to 500 entries retained. Other wallpaper types and dynamic events are not supported. HTTPS and provider content URIs are accepted. Legacy Apple aerial HTTP entries are upgraded to HTTPS using the host-scoped Apple trust anchor.
 
 Overflight: https://github.com/spocky/projectivy-plugin-wallpaper-overflight. Projectivy Launcher is not required. Enabling streaming is explicit.
+
+## Optional nature photos
+
+In either edition, open **Settings → Appearance → Download nature wallpapers**. Choose a photo to see its author, licence, source and download size, then Download. Three scenes are available: a forest waterfall, an alpine lake and Yosemite valley. These are licensed alternatives to the original personal-use photo collection. No Overflight plugin is needed.
+
+Downloads come from the StillFrame GitHub release, are size-limited and SHA-256 checked, and are stored as ordinary imported photos for offline use. Selecting an already saved photo does not download again. Hold OK in Wallpaper gallery to remove it. A failed or cancelled download leaves the current wallpaper unchanged. Downloading requires Internet permission in both editions; it is not background photo fetching. Credits remain available in the download catalogue and [photo credits](NATURE-WALLPAPERS.md).
