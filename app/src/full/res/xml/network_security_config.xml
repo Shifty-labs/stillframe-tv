@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false"><trust-anchors><certificates src="system" /></trust-anchors></base-config>
+    <!-- Apple's aerial-video CDN uses its private Apple Root CA. Trust it only for this exact host. -->
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="false">sylvan.apple.com</domain>
+        <trust-anchors><certificates src="system" /><certificates src="@raw/apple_video_root" /></trust-anchors>
+    </domain-config>
+</network-security-config>

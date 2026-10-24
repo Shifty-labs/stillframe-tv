@@ -1,0 +1,38 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'dev.stillframe.tv'
+    compileSdk 35
+    buildFeatures { aidl true; buildConfig true }
+
+    defaultConfig {
+        applicationId 'dev.stillframe.tv'
+        minSdk 26
+        targetSdk 34
+        versionCode 28
+        versionName '0.26.0'
+    }
+    flavorDimensions 'edition'
+    productFlavors {
+        full {
+            dimension 'edition'
+            buildConfigField 'boolean', 'HAS_VIDEO_WALLPAPERS', 'true'
+        }
+        lite {
+            dimension 'edition'
+            applicationIdSuffix '.lite'
+            buildConfigField 'boolean', 'HAS_VIDEO_WALLPAPERS', 'false'
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}

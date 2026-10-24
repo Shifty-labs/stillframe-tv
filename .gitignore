@@ -1,0 +1,17 @@
+# Local tools and generated output
+.gradle/
+.idea/
+**/build/
+local.properties
+*.iml
+.DS_Store
+# Private signing and local media
+*.jks
+*.keystore
+keystore.properties
+signing.properties
+.env
+.env.*
+personal-assets/
+
+*.apk
