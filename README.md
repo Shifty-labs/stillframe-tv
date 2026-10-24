@@ -79,6 +79,10 @@ Test app launching and remote controls before choosing StillFrame as Home. Keep 
 
 See [setup and recovery](docs/SETUP.md), [wallpapers](docs/WALLPAPERS.md), [Proton VPN](docs/PROTON-VPN.md), [development](docs/DEVELOPMENT.md), [laptop preview](docs/LAPTOP-PREVIEW.md), and [known limitations](docs/KNOWN-ISSUES.md).
 
+## Support StillFrame
+
+If you enjoy StillFrame, you can [buy Shifty Labs a coffee](https://buymeacoffee.com/shiftylabs) to support continued development. Support is entirely optional; the APK downloads remain free. Thank you for trying it.
+
 ## Licensing
 
 An open-source license for the original StillFrame code has not yet been selected. Repository visibility alone does not grant reuse rights. Third-party API notices and their Apache-2.0 license remain included in Full; see [notices](NOTICE.md).
