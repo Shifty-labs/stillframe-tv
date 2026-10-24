@@ -2,6 +2,10 @@
 
 A calm Android TV Home launcher with a clock, favourite apps, configurable layouts and remote-first settings. Projectivy Launcher is not required.
 
+<a href="https://buymeacoffee.com/shiftylabs"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Shifty Labs a coffee" width="217" height="60"></a>
+
+*Enjoying StillFrame? Coffee support is optional, and downloads remain free.*
+
 ![StillFrame TV — dock layout](docs/screenshots/full-dock.png)
 
 ![StillFrame TV — list left layout](docs/screenshots/list-left.png)
@@ -80,6 +84,8 @@ Test app launching and remote controls before choosing StillFrame as Home. Keep 
 See [setup and recovery](docs/SETUP.md), [wallpapers](docs/WALLPAPERS.md), [Proton VPN](docs/PROTON-VPN.md), [development](docs/DEVELOPMENT.md), [laptop preview](docs/LAPTOP-PREVIEW.md), and [known limitations](docs/KNOWN-ISSUES.md).
 
 ## Support StillFrame
+
+<a href="https://buymeacoffee.com/shiftylabs"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Shifty Labs a coffee" width="217" height="60"></a>
 
 If you enjoy StillFrame, you can [buy Shifty Labs a coffee](https://buymeacoffee.com/shiftylabs) to support continued development. Support is entirely optional; the APK downloads remain free. Thank you for trying it.
 
