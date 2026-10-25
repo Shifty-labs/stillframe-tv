@@ -132,6 +132,7 @@ html.brandGlow .appItem.focused,html.brandGlow .appItem:hover{
 html.brandGlow .appItem.focused,html.brandGlow .appItem:hover{outline-color:rgba(var(--app-glow,210,225,240),.9)}
 
 /* Settings concept: a framed glass surface, compact controls and clear hierarchy. */
+html.settingsSurface #shell{visibility:hidden}
 .netIndicator[type="button"]{cursor:pointer;font-family:inherit;font-size:12px;border:1px solid transparent;background:transparent;border-radius:12px;padding:6px;text-align:left}
 .netIndicator[type="button"].focused,.netIndicator[type="button"]:hover{border-color:rgba(255,255,255,.9);background:rgba(255,255,255,.13);box-shadow:0 0 15px rgba(130,190,255,.16)}
 #overlay.settingsView{inset:5vh 6vw;padding:3.4vh 3.5vw;border:1px solid rgba(189,216,255,.23);border-radius:28px;background:radial-gradient(ellipse at 0 0,rgba(52,86,131,.28),transparent 65%),linear-gradient(135deg,rgba(17,29,46,.97),rgba(10,21,30,.96));box-shadow:0 24px 80px rgba(0,0,0,.35),inset 0 1px rgba(255,255,255,.06)}
@@ -628,6 +629,7 @@ function activateSetting(){var s=currentSettings()[settingIndex];if(!s)return;
  if(s.kind==='dockSize'&&prefs.favourites.length>prefs.dockSize)toast('Extra favourites saved; switch to 8 slots to show them');
 }
 function render(){
+ document.documentElement.classList.toggle('settingsSurface',mode==='settings'||mode==='network');
  renderHome();$('overlay').className=mode==='home'?'':'visible'+((mode==='settings'||mode==='network')?' settingsView':'');
  $('networkDetails').style.display=mode==='network'?'grid':'none';
  $('settingsList').className=mode==='network'?'networkActions':mode==='settings'&&settingsPage==='main'?'settingsMain':'';
