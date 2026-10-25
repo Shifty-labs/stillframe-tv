@@ -670,7 +670,7 @@ window.updateNetworkStatus=function(status){
   }
  }
  activeNetworkTransport=transport;
- if(navArea==='toolbar'){if(previouslyFocused==='net-wifi'||previouslyFocused==='net-ethernet')toolbarIndex=0;else toolbarIndex=Math.max(0,toolbarIds().indexOf(previouslyFocused))}
+ if(navArea==='toolbar'){if(previouslyFocused==='net-wifi'||previouslyFocused==='net-ethernet')toolbarIndex=activeNetworkTransport?0:toolbarIds().indexOf('openSettings');else toolbarIndex=Math.max(0,toolbarIds().indexOf(previouslyFocused))}
  ['wifi','ethernet','vpn'].forEach(function(key){
   var connected=status&&status[key],active=connected&&(key==='vpn'||key===transport);
   if(key!=='vpn')$('net-'+key).style.display=key===transport?'flex':'none';
@@ -737,7 +737,7 @@ window.tvRemote=function(key){
   if(key==='select'){toggleVisibility();return}
  }else if(mode==='settings'){
   var step=settingsPage==='main'&&window.innerWidth>740?2:1;
-  if(key==='up')settingIndex=Math.max(0,settingIndex-step);
+  if(key==='up'&&settingIndex>=step)settingIndex-=step;
   if(key==='down')settingIndex=Math.min(currentSettings().length-1,settingIndex+step);
   if(key==='left')settingIndex=Math.max(0,settingIndex-1);
   if(key==='right')settingIndex=Math.min(currentSettings().length-1,settingIndex+1);
