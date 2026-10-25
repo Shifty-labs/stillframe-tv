@@ -130,13 +130,42 @@ html.brandGlow .appItem.focused,html.brandGlow .appItem:hover{
  box-shadow:inset 0 0 0 1px rgba(255,255,255,.25),inset 0 0 20px rgba(var(--app-glow,210,225,240),.14),0 0 0 1px rgba(var(--app-glow,210,225,240),.58),0 0 17px rgba(var(--app-glow,210,225,240),.52);
 }
 html.brandGlow .appItem.focused,html.brandGlow .appItem:hover{outline-color:rgba(var(--app-glow,210,225,240),.9)}
+
+/* Settings concept: a framed glass surface, compact controls and clear hierarchy. */
+.netIndicator[type="button"]{cursor:pointer;font-family:inherit;font-size:12px;border:1px solid transparent;background:transparent;border-radius:12px;padding:6px;text-align:left}
+.netIndicator[type="button"].focused,.netIndicator[type="button"]:hover{border-color:rgba(255,255,255,.9);background:rgba(255,255,255,.13);box-shadow:0 0 15px rgba(130,190,255,.16)}
+#overlay.settingsView{inset:5vh 6vw;padding:3.4vh 3.5vw;border:1px solid rgba(189,216,255,.23);border-radius:28px;background:radial-gradient(ellipse at 0 0,rgba(52,86,131,.28),transparent 65%),linear-gradient(135deg,rgba(17,29,46,.97),rgba(10,21,30,.96));box-shadow:0 24px 80px rgba(0,0,0,.35),inset 0 1px rgba(255,255,255,.06)}
+.settingsView .overlayHead{margin-bottom:2vh;align-items:center}
+.settingsView .overlayHead h2{font-size:clamp(30px,3vw,58px);letter-spacing:-.045em;margin-bottom:5px}
+.settingsView .overlayHead p{font-size:clamp(12px,.95vw,17px);color:rgba(224,234,248,.65)}
+.settingsView .corner{border:1px solid rgba(255,255,255,.14);border-radius:30px;padding:10px 16px;font-size:11px;opacity:.7;white-space:nowrap}
+.settingsView #settingsList{max-width:none;width:100%;gap:8px;padding:5px 10px 14px 5px;scroll-padding:10px}
+.settingsView #settingsList.settingsMain{grid-template-columns:repeat(2,minmax(0,1fr));align-content:start;gap:8px}
+.settingsView .setting{position:relative;min-height:54px;padding:11px 17px;border-radius:13px;border-color:rgba(184,208,245,.12);background:rgba(174,199,236,.045);font-size:clamp(14px,1.08vw,21px);gap:16px;transition:background .09s,border-color .09s}
+.settingsView .setting.focused,.settingsView .setting:hover{outline:0;border-color:rgba(140,190,255,.9);background:linear-gradient(100deg,rgba(80,135,211,.23),rgba(104,137,187,.09));box-shadow:inset 3px 0 #9ccaff,0 0 0 1px rgba(120,177,255,.19)}
+.settingsView .option{flex-shrink:0;padding:6px 11px;border-radius:8px;background:rgba(255,255,255,.06);color:#dce9fa;font-size:clamp(12px,.85vw,16px);max-width:48%;text-align:right;white-space:normal}
+.settingsView .setting[data-toggle="on"] .option{color:#b0efd1;background:rgba(83,184,135,.12)}
+.settingsSection{margin:12px 0 2px;padding:0 12px;color:#8faacb;font-size:11px;text-transform:uppercase;letter-spacing:.2em;font-weight:600}
+.settingsMain .setting{min-height:clamp(70px,14vh,100px);justify-content:flex-start;padding:clamp(10px,1.3vh,18px);gap:12px}
+.settingIcon{display:flex;align-items:center;justify-content:center;width:clamp(34px,4.3vw,49px);height:clamp(34px,4.3vw,49px);flex:0 0 clamp(34px,4.3vw,49px);border:1px solid rgba(var(--setting-rgb,135,180,240),.32);border-radius:15px;background:rgba(var(--setting-rgb,135,180,240),.12);color:rgb(var(--setting-rgb,135,180,240));font-size:25px}
+.settingCopy{display:flex;flex:1;min-width:0;flex-direction:column;gap:7px}
+.settingTitle{font-size:clamp(15px,1.35vw,25px);letter-spacing:-.025em}
+.settingDescription{color:rgba(222,234,251,.59);font-size:clamp(10px,.85vw,16px);line-height:1.35;font-weight:400}
+.settingsMain .setting .option{background:transparent;font-size:22px;color:rgba(214,230,252,.56);padding:0}
+#networkDetails{display:none;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;overflow-y:auto;min-height:0;flex:1;padding:3px 8px 12px 3px;align-content:start}
+.networkDatum{margin:0;border:1px solid rgba(190,218,255,.13);border-radius:15px;background:rgba(170,204,248,.045);padding:14px 18px;min-width:0}
+.networkDatum dt{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:#92accb;margin-bottom:8px}
+.networkDatum dd{margin:0;color:#e6f0ff;font-size:clamp(15px,1.15vw,22px);line-height:1.4;overflow-wrap:anywhere;white-space:pre-line}
+.settingsView #settingsList.networkActions{flex:0 0 auto;flex-direction:row;margin-top:10px;padding-bottom:3px}
+.networkActions .setting{justify-content:center;width:auto;flex:1}
+@media(max-width:740px){.settingsView #settingsList.settingsMain,#networkDetails{grid-template-columns:1fr}.settingsMain .setting{min-height:80px}.settingsView .corner{display:none}.settingIcon{width:38px;height:38px;flex-basis:38px}.settingsView #settingsList.networkActions{flex-direction:column}}
 </style>
 </head>
 <body>
 <div id="backdrop"></div><div id="shade"></div>
 <main id="shell">
  <header class="brand"><span class="brandmark"></span><span>STILLFRAME</span><span class="brandDetail">/ A QUIETER TV HOME</span></header>
- <nav id="topControls" aria-label="Quick access"><div id="networkStatus" role="status" aria-label="Network connections"><span id="net-wifi" class="netIndicator"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 8a16 16 0 0 1 20 0M5 12a11 11 0 0 1 14 0M8 16a6 6 0 0 1 8 0"/><circle cx="12" cy="20" r="1"/></svg><span>Wi-Fi<small id="net-wifi-state">Checking</small></span></span><span id="net-ethernet" class="netIndicator"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v13h-4v5H9v-5H5zM8 3v5m4-5v5m4-5v5"/></svg><span>Ethernet<small id="net-ethernet-state">Checking</small></span></span><button id="net-vpn" class="netIndicator" title="Toggle Proton VPN" aria-label="Toggle Proton VPN"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3 6v6c0 5 9 10 9 10s9-5 9-10V6zM8 12l3 3 5-6"/></svg><span>VPN<small id="net-vpn-state">Checking</small></span></button></div><button id="openAllApps" class="topAction" aria-label="All apps" title="All apps"><span class="topGlyph" aria-hidden="true">▦</span><span class="topLabel">All apps</span></button><button id="openSettings" class="topAction" aria-label="Settings" title="Settings"><span class="topGlyph" aria-hidden="true">⚙</span><span class="topLabel">Settings</span></button></nav>
+ <nav id="topControls" aria-label="Quick access"><div id="networkStatus" role="group" aria-label="Network connections"><button type="button" id="net-wifi" class="netIndicator"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 8a16 16 0 0 1 20 0M5 12a11 11 0 0 1 14 0M8 16a6 6 0 0 1 8 0"/><circle cx="12" cy="20" r="1"/></svg><span>Wi-Fi<small id="net-wifi-state">Checking</small></span></button><button type="button" id="net-ethernet" class="netIndicator"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v13h-4v5H9v-5H5zM8 3v5m4-5v5m4-5v5"/></svg><span>Ethernet<small id="net-ethernet-state">Checking</small></span></button><button id="net-vpn" class="netIndicator" title="Toggle Proton VPN" aria-label="Toggle Proton VPN"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3 6v6c0 5 9 10 9 10s9-5 9-10V6zM8 12l3 3 5-6"/></svg><span>VPN<small id="net-vpn-state">Checking</small></span></button></div><button id="openAllApps" class="topAction" aria-label="All apps" title="All apps"><span class="topGlyph" aria-hidden="true">▦</span><span class="topLabel">All apps</span></button><button id="openSettings" class="topAction" aria-label="Settings" title="Settings"><span class="topGlyph" aria-hidden="true">⚙</span><span class="topLabel">Settings</span></button></nav>
  <section class="clockBlock"><div class="time" id="time">10:24</div><div class="date" id="date">SATURDAY 24 OCTOBER</div><div class="subtitle">A little more room to breathe.</div></section>
  <div id="dockWrapper"><nav id="dock" aria-label="Favourite apps"></nav></div>
  <nav id="listMode" aria-label="Favourite apps as a list"></nav>
@@ -144,6 +173,7 @@ html.brandGlow .appItem.focused,html.brandGlow .appItem:hover{outline-color:rgba
 </main>
 <section id="overlay" aria-label="StillFrame menus">
  <div class="overlayHead"><div><h2 id="panelTitle">Your apps</h2><p id="panelHint">OK to open · Play/Pause to pin · Back to close</p></div><div class="corner">STILLFRAME / 0.29</div></div>
+ <div id="networkDetails" aria-label="Connection information"></div>
  <nav id="appGrid" aria-label="Installed applications"></nav>
  <nav id="settingsList" aria-label="Settings"></nav>
  <nav id="visibilityList" aria-label="Manage visibility of installed apps"></nav>
@@ -189,6 +219,7 @@ var settings=[
 {title:'Manage favourite apps',kind:'apps'},
 {title:'Choose apps shown in All Apps',kind:'visibility'},
 {title:'VPN controls',kind:'vpnSettings'},
+{title:'Connection',kind:'networkInfo'},
 {title:'Android TV Settings',kind:'androidsettings'},
 {title:'Back to Home',kind:'done'}
 ];
@@ -335,6 +366,27 @@ function appGlow(app){
  return /^(?:\d{1,3},){2}\d{1,3}$/.test(accent)&&accent.split(',').every(function(n){return Number(n)<=255})?accent:'210,225,240';
 }
 function applyAppGlow(item,app){item.style.setProperty('--app-glow',appGlow(app))}
+var activeNetworkTransport='',networkSnapshot=null,networkIndex=0,networkReturn='home';
+function toolbarIds(){return (activeNetworkTransport?['net-'+activeNetworkTransport]:[]).concat(['net-vpn','openAllApps','openSettings'])}
+function focusToolbar(id){navArea='toolbar';toolbarIndex=Math.max(0,toolbarIds().indexOf(id))}
+function openNetworkInfo(){
+ if(mode!=='network')networkReturn=mode==='settings'?'settings':'home';
+ networkIndex=0;networkSnapshot=null;
+ if(window.StillFrameAndroid&&window.StillFrameAndroid.networkInfo)try{networkSnapshot=JSON.parse(window.StillFrameAndroid.networkInfo(activeNetworkTransport))}catch(e){}
+ if(!networkSnapshot)networkSnapshot={title:'Connection',hint:'Live connection details are available on Android TV.',rows:[{label:'Connection',value:activeNetworkTransport==='wifi'?'Wi-Fi':activeNetworkTransport==='ethernet'?'Ethernet':'Not connected'}]};
+ mode='network';render();
+}
+function activateNetworkAction(){
+ if(networkIndex===0){openNetworkInfo();return}
+ if(networkIndex===1){if(window.StillFrameAndroid&&window.StillFrameAndroid.openNetworkSettings)window.StillFrameAndroid.openNetworkSettings(activeNetworkTransport);else toast('Network settings are available on Android TV');return}
+ mode=networkReturn;render();
+}
+function renderNetwork(){
+ $('panelTitle').textContent=networkSnapshot.title||'Connection';$('panelHint').textContent='Connection details · Left/right actions · Up/down scroll · Back returns';
+ var grid=$('networkDetails');grid.replaceChildren();
+ (networkSnapshot.rows||[]).forEach(function(row){var box=document.createElement('dl');box.className='networkDatum';var label=document.createElement('dt'),value=document.createElement('dd');label.textContent=row.label;value.textContent=row.value;box.appendChild(label);box.appendChild(value);grid.appendChild(box)});
+ var list=$('settingsList');list.replaceChildren();['Refresh','Android network settings',networkReturn==='settings'?'Back to Settings':'Back to Home'].forEach(function(label,i){var b=document.createElement('button');b.className='setting'+(networkIndex===i?' focused':'');b.textContent=label;b.onclick=function(){networkIndex=i;activateNetworkAction()};list.appendChild(b)});
+}
 function createTile(app,i){
  var item=document.createElement('button');item.className='tile'+(mode==='home'&&navArea==='favourites'&&i===homeIndex?' focused':'')+(reordering&&i===homeIndex?' moving':'');
  applyAppGlow(item,app);
@@ -346,7 +398,7 @@ function createTile(app,i){
 function homeItems(){return prefs.favourites.slice(0,prefs.dockSize).map(function(id){return apps.find(function(a){return a.id===id})}).filter(Boolean)}
 function openAllApps(from){priorMode=from||'home';mode='apps';appIndex=0;render()}
 function openSettings(){refreshVpnProvider();refreshIconPacks();settingsPage='main';mode='settings';settingIndex=0;$('settingsList').scrollTop=0;render()}
-function activateToolbar(){if(toolbarIndex===0)toggleVpn();else if(toolbarIndex===1)openAllApps('home');else openSettings()}
+function activateToolbar(){var id=toolbarIds()[toolbarIndex];if(id==='net-vpn')toggleVpn();else if(id==='openAllApps')openAllApps('home');else if(id==='openSettings')openSettings();else openNetworkInfo()}
 function openApp(id){if(window.StillFrameAndroid)window.StillFrameAndroid.openApp(id);else toast('App launching is available on Android TV')}
 var iconContextApp=null,iconContextIndex=0,iconContextReturn='home';
 function iconActions(){return (iconContextApp&&homeItems().some(function(a){return a.id===iconContextApp.id})?['Move icon']:[]).concat(['Change appearance','Cancel'])}
@@ -391,7 +443,7 @@ function renderHome(){
  document.documentElement.style.setProperty('--app-icon-radius',prefs.iconShape==='circle'?'50%':'23%');
  applyWallpaper();$('shell').className=(prefs.layout!=='dock'?'list '+(prefs.layout==='listLeft'?'listLeft':'listRight'):'')+(prefs.brand?'':' clean')+(prefs.showDockLabels?'':' hideDockLabels')+(prefs.dockWidth==='narrow'?' narrowDock':'')+(prefs.dockHeight==='compact'?' compactDock':'')+(reordering?' reordering':'');
  ['dock','listMode'].forEach(function(id){var n=$(id);n.replaceChildren();homeItems().forEach(function(app,i){n.appendChild(createTile(app,i))})});
- ['net-vpn','openAllApps','openSettings'].forEach(function(id,i){$(id).classList.toggle('focused',mode==='home'&&navArea==='toolbar'&&toolbarIndex===i)});
+ ['net-wifi','net-ethernet','net-vpn','openAllApps','openSettings'].forEach(function(id){$(id).classList.toggle('focused',mode==='home'&&navArea==='toolbar'&&toolbarIds()[toolbarIndex]===id)});
  if(prefs.layout!=='dock'&&mode==='home'&&navArea==='favourites'&&$('listMode').children[homeIndex])$('listMode').children[homeIndex].scrollIntoView({block:'nearest',inline:'nearest'});
 }
 function updateClock(){var now=new Date(),h=now.getHours()%12||12,m=('0'+now.getMinutes()).slice(-2);$('time').textContent=h+':'+m;$('date').textContent=now.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'}).toUpperCase()}
@@ -412,21 +464,30 @@ function renderApps(){
  });
  var focus=grid.children[appIndex];if(focus)focus.scrollIntoView({block:'nearest',inline:'nearest'});
 }
-function settingValue(s){if(s.kind==='natureDownloads')return 'Browse →';if(s.kind==='vpnSettings')return vpnProviderName+' →';if(s.kind==='wallpaperSource')return mediaWallpaperSource+' →';if(s.kind==='nextVideo')return 'Next →';if(s.kind==='providerSettings')return 'Open →';if(s.kind==='appearance')return 'Open →';if(s.kind==='parentSettings')return 'Back →';if(s.kind==='visibility')return prefs.hiddenApps.length+' hidden  →';if(s.options){var index=s.options.indexOf(prefs[s.kind]);return s.labels[Math.max(0,index)]}return s.kind==='gallery'?'Browse →':s.kind==='apps'?'Choose →':s.kind==='rearrange'?'Start moving →':s.kind==='androidsettings'?'Open →':'Close'}
+function settingValue(s){if(s.kind==='networkInfo')return 'Details';if(s.kind==='natureDownloads')return 'Browse →';if(s.kind==='vpnSettings')return vpnProviderName+' →';if(s.kind==='wallpaperSource')return mediaWallpaperSource+' →';if(s.kind==='nextVideo')return 'Next →';if(s.kind==='providerSettings')return 'Open →';if(s.kind==='appearance')return 'Open →';if(s.kind==='parentSettings')return 'Back →';if(s.kind==='visibility')return prefs.hiddenApps.length+' hidden  →';if(s.options){var index=s.options.indexOf(prefs[s.kind]);return s.labels[Math.max(0,index)]}return s.kind==='gallery'?'Browse →':s.kind==='apps'?'Choose →':s.kind==='rearrange'?'Start moving →':s.kind==='androidsettings'?'Open →':'Close'}
 function renderSettings(){
- $('panelTitle').textContent=settingsPage==='appearance'?'Appearance':'Settings';$('panelHint').textContent=settingsPage==='appearance'?'Choose a setting · OK to change · Back to Settings':'Choose a setting · OK to open · Back for Home';
- var list=$('settingsList');var previousScroll=list.scrollTop;list.replaceChildren();
+ $('panelTitle').textContent=settingsPage==='appearance'?'Make it yours':'Settings';
+ $('panelHint').textContent=settingsPage==='appearance'?'Wallpaper, layout and finishing touches · OK changes · Back returns':'A little control. A little more you. · Arrows to browse · OK to open';
+ var list=$('settingsList'),previousScroll=list.scrollTop;list.replaceChildren();
+ var cards={appearance:['❖','Layouts, wallpapers and icon style','151,181,255'],rearrange:['↔','Put your favourite apps in order','113,218,200'],apps:['▦','Choose what lives on your Home screen','255,197,126'],visibility:['◉','Keep All Apps tidy without removing anything','132,205,250'],vpnSettings:['◇','Choose the app used by your VPN toggle','186,156,255'],networkInfo:['⌁','Wi-Fi, Ethernet and connection details','115,219,201'],androidsettings:['⚙','Open your device’s Android settings','178,192,212'],done:['←','Return to your quiet TV Home','182,201,228']};
+ var lastSection='';
  currentSettings().forEach(function(s,i){
-  var item=document.createElement('button');item.className='setting'+(i===settingIndex?' focused':'');
-  var left=document.createElement('span');left.textContent=s.title;
-  var right=document.createElement('span');right.className='option';right.textContent=settingValue(s);
-  item.appendChild(left);item.appendChild(right);item.addEventListener('click',function(){settingIndex=i;activateSetting()});list.appendChild(item);
+  if(settingsPage==='appearance'){
+   var section=['wallpaperSource','nextVideo','providerSettings','gallery','natureDownloads','rotation'].indexOf(s.kind)>=0?'Wallpapers':['layout','dockSize','dockWidth','dockHeight'].indexOf(s.kind)>=0?'Home layout':s.kind==='parentSettings'?'':'Icons & finishing touches';
+   if(section&&section!==lastSection){var heading=document.createElement('h3');heading.className='settingsSection';heading.textContent=section;list.appendChild(heading)}lastSection=section;
+  }
+  var item=document.createElement('button');item.className='setting'+(i===settingIndex?' focused':'');item.dataset.kind=s.kind;
+  item.setAttribute('aria-label',s.title+', '+settingValue(s));
+  if(typeof prefs[s.kind]==='boolean')item.dataset.toggle=prefs[s.kind]?'on':'off';
+  var left=document.createElement('span');
+  if(settingsPage==='main'){
+   var card=cards[s.kind]||['›','Open this setting','151,181,255'];item.style.setProperty('--setting-rgb',card[2]);var icon=document.createElement('span');icon.className='settingIcon';icon.setAttribute('aria-hidden','true');icon.textContent=card[0];item.appendChild(icon);
+   left.className='settingCopy';var title=document.createElement('span');title.className='settingTitle';title.textContent=s.title;var hint=document.createElement('span');hint.className='settingDescription';hint.textContent=card[1];left.appendChild(title);left.appendChild(hint);
+  }else left.textContent=s.title;
+  var right=document.createElement('span');right.className='option';right.textContent=settingsPage==='main'?'›':settingValue(s);
+  item.appendChild(left);item.appendChild(right);item.onclick=function(){settingIndex=i;activateSetting()};list.appendChild(item);
  });
- // All settings must remain accessible on short-height TVs. Remember scroll
- // when rebuilding the list, then bring the highlighted row back into view.
- list.scrollTop=previousScroll;
- var active=list.children[settingIndex];
- if(active)active.scrollIntoView({block:'nearest',inline:'nearest'});
+ list.scrollTop=previousScroll;var active=list.querySelectorAll('button.setting')[settingIndex];if(active)active.scrollIntoView({block:'nearest',inline:'nearest'});
 }
 function renderVisibility(){
  visibilityIndex=Math.max(0,Math.min(visibilityIndex,apps.length));
@@ -542,6 +603,7 @@ function toggleAppFavourite(){var a=visibleApps()[appIndex];if(!a)return;var ind
  if(index>=0){prefs.favourites.splice(index,1);toast('Removed '+a.name)}
  else{if(prefs.favourites.length>=prefs.dockSize){toast('Dock full · choose '+(prefs.dockSize===6?'8 slots in Settings':'another favourite')+' first');return}prefs.favourites.push(a.id);toast('Added '+a.name)}persist();homeIndex=Math.max(0,Math.min(homeIndex,homeItems().length-1));render()}
 function activateSetting(){var s=currentSettings()[settingIndex];if(!s)return;
+ if(s.kind==='networkInfo'){openNetworkInfo();return}
  if(s.kind==='natureDownloads'){if(window.StillFrameAndroid)window.StillFrameAndroid.downloadNatureWallpapers();else toast('Nature downloads are available in the Android app');return}
  if(s.kind==='vpnSettings'){if(window.StillFrameAndroid&&window.StillFrameAndroid.chooseVpnProvider)window.StillFrameAndroid.chooseVpnProvider();else toast('VPN control setup is available in the Android app');return}
  if(s.kind==='wallpaperSource'){if(window.StillFrameAndroid)window.StillFrameAndroid.chooseWallpaperSource();return}
@@ -566,11 +628,14 @@ function activateSetting(){var s=currentSettings()[settingIndex];if(!s)return;
  if(s.kind==='dockSize'&&prefs.favourites.length>prefs.dockSize)toast('Extra favourites saved; switch to 8 slots to show them');
 }
 function render(){
- renderHome();$('overlay').className=mode==='home'?'':'visible';
+ renderHome();$('overlay').className=mode==='home'?'':'visible'+((mode==='settings'||mode==='network')?' settingsView':'');
+ $('networkDetails').style.display=mode==='network'?'grid':'none';
+ $('settingsList').className=mode==='network'?'networkActions':mode==='settings'&&settingsPage==='main'?'settingsMain':'';
  $('appGrid').style.display=mode==='apps'?'grid':'none';
- $('settingsList').style.display=mode==='settings'||mode==='confirmRemove'||mode==='iconActions'?'flex':'none';
+ $('settingsList').style.display=mode==='settings'&&settingsPage==='main'?'grid':mode==='settings'||mode==='network'||mode==='confirmRemove'||mode==='iconActions'?'flex':'none';
  $('visibilityList').style.display=mode==='visibility'?'flex':'none';
  $('wallGrid').style.display=mode==='wallpapers'?'grid':'none';
+ if(mode==='network')renderNetwork();
  if(mode==='iconActions')renderIconActions();if(mode==='apps')renderApps();if(mode==='visibility')renderVisibility();if(mode==='settings')renderSettings();if(mode==='wallpapers')renderWallpapers();if(mode==='confirmRemove')renderRemoveWallpaper();
 }
 var vpnProviderName='Proton VPN',vpnProviderIsProton=true;
@@ -588,8 +653,10 @@ window.vpnQuickConnectResult=function(action){
  vpnRequestUntil=vpnPendingAction?Date.now()+45000:0;
  if(vpnPendingAction){$('net-vpn-state').textContent=action==='disconnect'?'Disconnecting…':'Connecting…';toast(action==='disconnect'?vpnProviderName+' disconnect requested':vpnProviderName+(vpnProviderIsProton?' Fastest':' default')+' connection requested')}
 };
-$('net-vpn').addEventListener('click',function(){toolbarIndex=0;navArea='toolbar';render();toggleVpn()});
+$('net-vpn').addEventListener('click',function(){focusToolbar('net-vpn');render();toggleVpn()});
+['wifi','ethernet'].forEach(function(type){$('net-'+type).onclick=function(){focusToolbar('net-'+type);openNetworkInfo()}});
 window.updateNetworkStatus=function(status){
+ var previouslyFocused=toolbarIds()[toolbarIndex];
  var transport='';
  if(status){
   if(status.ethernetActive&&!status.wifiActive)transport='ethernet';
@@ -600,6 +667,8 @@ window.updateNetworkStatus=function(status){
    else if(status.wifi&&!status.ethernet)transport='wifi';
   }
  }
+ activeNetworkTransport=transport;
+ if(navArea==='toolbar'){if(previouslyFocused==='net-wifi'||previouslyFocused==='net-ethernet')toolbarIndex=0;else toolbarIndex=Math.max(0,toolbarIds().indexOf(previouslyFocused))}
  ['wifi','ethernet','vpn'].forEach(function(key){
   var connected=status&&status[key],active=connected&&(key==='vpn'||key===transport);
   if(key!=='vpn')$('net-'+key).style.display=key===transport?'flex':'none';
@@ -609,9 +678,9 @@ window.updateNetworkStatus=function(status){
    if(vpnPendingAction&&Date.now()<vpnRequestUntil)text=vpnPendingAction==='disconnect'?'Disconnecting…':'Connecting…';
    $('net-vpn').title=connected?'Disconnect '+vpnProviderName:'Connect '+vpnProviderName+(vpnProviderIsProton?' to Fastest':'');
   }
-  $('net-'+key).className='netIndicator'+(connected?' connected':'')+(active?' active':'')+(key==='vpn'&&mode==='home'&&navArea==='toolbar'&&toolbarIndex===0?' focused':'');
+  $('net-'+key).className='netIndicator'+(connected?' connected':'')+(active?' active':'')+(mode==='home'&&navArea==='toolbar'&&toolbarIds()[toolbarIndex]==='net-'+key?' focused':'');
   $('net-'+key+'-state').textContent=text;
-  $('net-'+key).setAttribute('aria-label',key+': '+text+(key==='vpn'?(connected?' · Press to disconnect '+vpnProviderName:' · Press to connect '+vpnProviderName+(vpnProviderIsProton?' to Fastest':'')):''));
+  $('net-'+key).setAttribute('aria-label',key+': '+text+(key!=='vpn'?' · Press for connection information':'')+(key==='vpn'?(connected?' · Press to disconnect '+vpnProviderName:' · Press to connect '+vpnProviderName+(vpnProviderIsProton?' to Fastest':'')):''));
  });
 };
 window.tvRemote=function(key){
@@ -625,6 +694,7 @@ window.tvRemote=function(key){
  }
  if(key==='hold'){if(mode==='home'&&navArea==='favourites')openIconActions(homeItems()[homeIndex],'home');else if(mode==='apps')openIconActions(visibleApps()[appIndex],'apps');else if(mode==='wallpapers')startRemoveWallpaper();return}
  if(mode==='iconActions'){if(key==='back'){mode=iconContextReturn;render();return}if(key==='up'||key==='left')iconContextIndex=Math.max(0,iconContextIndex-1);if(key==='down'||key==='right')iconContextIndex=Math.min(iconActions().length-1,iconContextIndex+1);if(key==='select'){chooseIconAction();return}render();return}
+ if(mode==='network'){if(key==='back'){mode=networkReturn;render();return}if(key==='up'||key==='down'){$('networkDetails').scrollBy(0,key==='up'?-120:120);return}if(key==='left')networkIndex=Math.max(0,networkIndex-1);if(key==='right')networkIndex=Math.min(2,networkIndex+1);if(key==='select'){activateNetworkAction();return}render();return}
  if(key==='back'){
   if(mode==='home'){if(window.StillFrameAndroid)window.StillFrameAndroid.close();else toast('You are on the StillFrame Home screen');return}
   if(mode==='apps'){mode=priorMode==='settings'?'settings':'home'}
@@ -636,13 +706,13 @@ window.tvRemote=function(key){
   if(key==='pin'||key==='apps'){openAllApps('home');return}
   if(navArea==='toolbar'){
    if(key==='left')toolbarIndex=Math.max(0,toolbarIndex-1);
-   if(key==='right')toolbarIndex=Math.min(2,toolbarIndex+1);
+   if(key==='right')toolbarIndex=Math.min(toolbarIds().length-1,toolbarIndex+1);
    if(key==='down'&&homeItems().length)navArea='favourites';
    if(key==='select'){activateToolbar();return}
   }else{
    if(key==='up'&&(prefs.layout==='dock'||homeIndex===0)){navArea='toolbar';toolbarIndex=0}
    else if(prefs.layout!=='dock'){
-    if(key==='right'){navArea='toolbar';toolbarIndex=2}
+    if(key==='right')focusToolbar('openSettings')
     if(key==='up')homeIndex=Math.max(0,homeIndex-1);
     if(key==='down')homeIndex=Math.min(homeItems().length-1,homeIndex+1);
    }else{
@@ -664,8 +734,11 @@ window.tvRemote=function(key){
   if(key==='down'||key==='right')visibilityIndex=Math.min(apps.length,visibilityIndex+1);
   if(key==='select'){toggleVisibility();return}
  }else if(mode==='settings'){
-  if(key==='up'||key==='left')settingIndex=Math.max(0,settingIndex-1);
-  if(key==='down'||key==='right')settingIndex=Math.min(currentSettings().length-1,settingIndex+1);
+  var step=settingsPage==='main'&&window.innerWidth>740?2:1;
+  if(key==='up')settingIndex=Math.max(0,settingIndex-step);
+  if(key==='down')settingIndex=Math.min(currentSettings().length-1,settingIndex+step);
+  if(key==='left')settingIndex=Math.max(0,settingIndex-1);
+  if(key==='right')settingIndex=Math.min(currentSettings().length-1,settingIndex+1);
   if(key==='select'){activateSetting();return}
  }else if(mode==='confirmRemove'){
   if(key==='up'||key==='left')deleteChoice=0;
@@ -682,8 +755,8 @@ window.tvRemote=function(key){
  }
  render();
 };
-$('openAllApps').addEventListener('click',function(){toolbarIndex=1;navArea='toolbar';openAllApps('home')});
-$('openSettings').addEventListener('click',function(){toolbarIndex=2;navArea='toolbar';openSettings()});
+$('openAllApps').addEventListener('click',function(){focusToolbar('openAllApps');openAllApps('home')});
+$('openSettings').addEventListener('click',function(){focusToolbar('openSettings');openSettings()});
 /* Browser preview: hold Enter for 650 ms to emulate holding OK on the TV remote. M or P opens All apps on Home, pins in menus. */
 document.addEventListener('keydown',function(e){
  if(e.key==='Enter'){

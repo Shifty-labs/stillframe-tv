@@ -252,6 +252,14 @@ public class MainActivity extends Activity {
         @JavascriptInterface public void nextVideoWallpaper(){runOnUiThread(()->wallpaperSources.next());}
         @JavascriptInterface public void wallpaperProviderSettings(){runOnUiThread(()->wallpaperSources.providerSettings());}
 
+        @JavascriptInterface public String networkInfo(String transport){return NetworkInfoPanel.snapshot(MainActivity.this,transport);}
+        @JavascriptInterface public void openNetworkSettings(String transport){runOnUiThread(()->{
+            Intent intent=new Intent("wifi".equals(transport)?Settings.ACTION_WIFI_SETTINGS:Settings.ACTION_WIRELESS_SETTINGS);
+            try{startActivity(intent);}catch(ActivityNotFoundException|SecurityException unavailable){
+                try{startActivity(new Intent(Settings.ACTION_SETTINGS));}catch(ActivityNotFoundException|SecurityException missing){Toast.makeText(MainActivity.this,"Android network settings are unavailable",Toast.LENGTH_LONG).show();}
+            }
+        });}
+
         @JavascriptInterface public void toggleProtonVpn(){
             runOnUiThread(()->protonShortcut.toggle());
         }
