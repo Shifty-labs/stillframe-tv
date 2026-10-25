@@ -42,6 +42,10 @@ Open StillFrame and test app launching and your remote before making it Home. Ke
 
 **Earlier development installs:** these releases use a new private release key and cannot update debug-signed builds in place. Do not uninstall your working Home launcher without a fallback; uninstalling also removes settings. Your existing installation can continue working. Future public releases will use the same release key for in-place updates.
 
+## Optional family wallpaper pack
+
+[Download Family Adventures — four wallpapers](https://github.com/Shifty-labs/stillframe-tv/releases/download/v0.29.0/stillframe-family-adventures-v1.zip): Roblox-inspired Rainbow Adventure, Minecraft-inspired Cherry Adventure, 99 Nights-inspired Cozy Forest and Fortnite-inspired Island Adventure. Unofficial AI-generated fan art, supplied separately from the app. Unzip and import the JPGs through **Settings → Appearance → Wallpaper gallery** using a compatible TV file picker. Works offline in Full and Lite. Game names and characters belong to their respective owners; no endorsement is implied.
+
 ## Status
 
 Experimental development version **0.29.0**. The preceding Full implementation was tested on NVIDIA Shield with Android 11. Full and Lite have launched in an Android TV emulator. Lite 0.26 was also tested on a Sharp AQUOS running Android 14, including app launch, Home and user-reported standby/wake. The release-signed packages need wider device testing.
@@ -80,6 +84,10 @@ Test app launching and remote controls before choosing StillFrame as Home. Keep 
 - Home closes StillFrame menus.
 - Play/Pause manages favourites where indicated.
 - Settings → Appearance contains layout, wallpaper and icon controls.
+- **Appearance → Layout width / Layout height** sizes the bottom dock and both side lists. **Outer frame** hides or shows the surrounding panel while keeping app tiles and focus glow.
+- Select the active Wi-Fi or Ethernet icon to see connection details and open Android network settings.
+- Settings uses grouped appearance controls and a remote-friendly card layout.
+- Full retains video continuity on brief Home presses and uses the last video frame while resuming from other apps.
 - **Appearance → App brand glow** turns the coloured focus rim and halo on or off. Known apps use curated brand colours; other apps use a cached colour sample from their original Android icon, or neutral white if no suitable colour is found. Applies to dock, both list layouts and All Apps; icon packs do not override known brand colours. Reordering keeps its separate gold highlight.
 - First use of VPN controls explains widget permission. Continue opens Android approval where available, or one-time ADB instructions on TVs without that screen.
 
