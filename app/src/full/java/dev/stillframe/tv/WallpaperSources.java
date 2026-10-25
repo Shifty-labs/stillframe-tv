@@ -32,6 +32,8 @@ final class WallpaperSources {
     private int generation,index,errors;
     private AlertDialog dialog;
     private Runnable bindTimeout;
+    private final Runnable releaseAfterPause=this::releaseBackground;
+    private void releaseBackground(){active=false;generation++;player.pause();unbind();}
 
     WallpaperSources(Activity a,FrameLayout root,WebView web){
         activity=a;this.web=web;prefs=a.getPreferences(Context.MODE_PRIVATE);
@@ -45,6 +47,9 @@ final class WallpaperSources {
     }
     void publish(){if(!destroyed)web.evaluateJavascript("window.wallpaperMediaState && window.wallpaperMediaState("+state()+")",null);}
     void resume(){
+        handler.removeCallbacks(releaseAfterPause);
+        // HOME can cause a short pause/new-intent/resume cycle on the same activity.
+        if(active){player.resume();publish();return;}
         active=true;
         if(source.equals("local")){
             label="Local video";
@@ -59,8 +64,8 @@ final class WallpaperSources {
         player.resume();publish();
     }
     void home(){if(dialog!=null)dialog.dismiss();}
-    void pause(){active=false;generation++;player.pause();unbind();}
-    void destroy(){destroyed=true;pause();worker.shutdownNow();if(dialog!=null)dialog.dismiss();}
+    void pause(){handler.removeCallbacks(releaseAfterPause);handler.postDelayed(releaseAfterPause,250);}
+    void destroy(){destroyed=true;handler.removeCallbacks(releaseAfterPause);active=false;generation++;unbind();player.destroy();worker.shutdownNow();if(dialog!=null)dialog.dismiss();}
     private List<ResolveInfo> providers(){
         List<ResolveInfo> result=new ArrayList<>();
         for(ResolveInfo info:activity.getPackageManager().queryIntentServices(new Intent(ACTION),PackageManager.GET_META_DATA)){
