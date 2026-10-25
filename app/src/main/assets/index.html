@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>StillFrame TV v0.28</title>
+<title>StillFrame TV v0.29</title>
 <style>
 :root{--ink:#f7f9f8;--dim:rgba(255,255,255,.72);--panel:rgba(9,21,27,.95);--outline:rgba(255,255,255,.23);--accent:#e9e5d7}
 *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#11232b;color:var(--ink);font-family:Arial,"Helvetica Neue",sans-serif}
@@ -121,6 +121,15 @@ html.videoWallpaper,html.videoWallpaper body{background:transparent}html.videoWa
 #backdrop.alpine{background:linear-gradient(165deg,#112c47 0%,#4b7588 43%,#a9b9b5 67%,#384f57 100%)}
 #backdrop.desert{background:linear-gradient(140deg,#343348 0%,#9a6c58 48%,#c69c70 68%,#5b4c43 100%)}
 #backdrop.sage{background:linear-gradient(130deg,#17363b,#5a7270 52%,#b3a890)}
+
+/* Focus-only brand glow: static shadows, no continuous animation or extra renderer. */
+html.brandGlow #shell .tile.focused:not(.moving),html.brandGlow #shell .tile:hover:not(.moving),
+html.brandGlow .appItem.focused,html.brandGlow .appItem:hover{
+ border-color:rgba(var(--app-glow,210,225,240),.95);
+ background:linear-gradient(145deg,rgba(var(--app-glow,210,225,240),.28),rgba(var(--app-glow,210,225,240),.08)),rgba(11,24,32,.62);
+ box-shadow:inset 0 0 0 1px rgba(255,255,255,.25),inset 0 0 20px rgba(var(--app-glow,210,225,240),.14),0 0 0 1px rgba(var(--app-glow,210,225,240),.58),0 0 17px rgba(var(--app-glow,210,225,240),.52);
+}
+html.brandGlow .appItem.focused,html.brandGlow .appItem:hover{outline-color:rgba(var(--app-glow,210,225,240),.9)}
 </style>
 </head>
 <body>
@@ -134,7 +143,7 @@ html.videoWallpaper,html.videoWallpaper body{background:transparent}html.videoWa
  <div id="reorderBanner" role="status" aria-live="polite">Move with arrows · OK to save · Back to cancel</div>
 </main>
 <section id="overlay" aria-label="StillFrame menus">
- <div class="overlayHead"><div><h2 id="panelTitle">Your apps</h2><p id="panelHint">OK to open · Play/Pause to pin · Back to close</p></div><div class="corner">STILLFRAME / 0.28</div></div>
+ <div class="overlayHead"><div><h2 id="panelTitle">Your apps</h2><p id="panelHint">OK to open · Play/Pause to pin · Back to close</p></div><div class="corner">STILLFRAME / 0.29</div></div>
  <nav id="appGrid" aria-label="Installed applications"></nav>
  <nav id="settingsList" aria-label="Settings"></nav>
  <nav id="visibilityList" aria-label="Manage visibility of installed apps"></nav>
@@ -156,7 +165,7 @@ var demo=[
 ];
 var wallpapers=[{"id": "coast", "name": "Coastal dusk", "path": "", "photo": false, "gradient": "linear-gradient(165deg,#233a58 0%,#b17c79 48%,#344e5c 55%,#142932 100%)"}, {"id": "bluehour", "name": "Blue hour", "path": "", "photo": false, "gradient": "linear-gradient(145deg,#102739 0%,#395b75 45%,#70858e 68%,#172f3d 100%)"}, {"id": "dawn", "name": "Warm dawn", "path": "", "photo": false, "gradient": "linear-gradient(150deg,#2b2f50 0%,#a17582 40%,#d7b094 62%,#455e66 100%)"}, {"id": "mist", "name": "Mountain mist", "path": "", "photo": false, "gradient": "linear-gradient(155deg,#253e44 0%,#617c78 42%,#9ca9a0 65%,#2c4f4e 100%)"}, {"id": "forest", "name": "Forest dusk", "path": "", "photo": false, "gradient": "linear-gradient(125deg,#0b2424 0%,#234d42 45%,#758368 74%,#243d37 100%)"}, {"id": "alpine", "name": "Alpine sky", "path": "", "photo": false, "gradient": "linear-gradient(165deg,#112c47 0%,#4b7588 43%,#a9b9b5 67%,#384f57 100%)"}, {"id": "desert", "name": "Desert glow", "path": "", "photo": false, "gradient": "linear-gradient(140deg,#343348 0%,#9a6c58 48%,#c69c70 68%,#5b4c43 100%)"}, {"id": "sage", "name": "Soft sage", "path": "", "photo": false, "gradient": "linear-gradient(130deg,#17363b,#5a7270 52%,#b3a890)"}];
 var apps=[],icons={},importedThumbs={},importedFull={};
-var prefs={wallpaper:'coast',layout:'dock',favourites:[],hiddenApps:[],dockSize:6,dockWidth:'standard',dockHeight:'standard',showDockLabels:true,brand:true,rotation:0,iconShape:'rounded',wallpaperFavourites:['coast','bluehour']};
+var prefs={wallpaper:'coast',layout:'dock',favourites:[],hiddenApps:[],dockSize:6,dockWidth:'standard',dockHeight:'standard',showDockLabels:true,brand:true,rotation:0,iconShape:'rounded',brandGlow:true,wallpaperFavourites:['coast','bluehour']};
 var mode='home',priorMode='home',homeIndex=0,navArea='favourites',toolbarIndex=0,appIndex=0,settingIndex=0,visibilityIndex=0,wallIndex=0,toastTimer,rotationTimer;
 var reordering=false,reorderSnapshot=null,holdTimer=null,holdActivated=false;
 var pendingRemove=null,deleteChoice=0;
@@ -173,6 +182,7 @@ var settings=[
 {title:'Dock height',kind:'dockHeight',options:['standard','compact'],labels:['Standard (default)','Compact — same icon size']},
 {title:'Icon pack',kind:'iconPack',options:[''],labels:['Original app icons']},
 {title:'App icon shape',kind:'iconShape',options:['rounded','circle'],labels:['Rounded corners','Circle']},
+{title:'App brand glow',kind:'brandGlow',options:[true,false],labels:['On','Off']},
 {title:'Show app labels on dock',kind:'showDockLabels',options:[true,false],labels:['On (default)','Off — icons only']},
 {title:'Rearrange favourite apps',kind:'rearrange'},
 {title:'Show StillFrame branding',kind:'brand',options:[true,false],labels:['On','Off']},
@@ -183,7 +193,7 @@ var settings=[
 {title:'Back to Home',kind:'done'}
 ];
 var settingsPage='main';
-var appearanceKinds=['wallpaperSource','nextVideo','providerSettings','gallery','natureDownloads','rotation','layout','dockSize','dockWidth','dockHeight','iconPack','iconShape','showDockLabels','brand'];
+var appearanceKinds=['wallpaperSource','nextVideo','providerSettings','gallery','natureDownloads','rotation','layout','dockSize','dockWidth','dockHeight','iconPack','iconShape','brandGlow','showDockLabels','brand'];
 function currentSettings(){
  if(settingsPage==='appearance')return settings.filter(function(s){return appearanceKinds.indexOf(s.kind)>=0&&(supportsVideoWallpapers||['wallpaperSource','nextVideo','providerSettings'].indexOf(s.kind)<0)}).concat([{title:'Back to Settings',kind:'parentSettings'}]);
  return [{title:'Appearance',kind:'appearance'}].concat(settings.filter(function(s){return appearanceKinds.indexOf(s.kind)<0}));
@@ -285,6 +295,7 @@ function boot(payload){
  prefs.dockWidth=old.dockWidth==='narrow'?'narrow':'standard';
  prefs.dockHeight=old.dockHeight==='compact'?'compact':'standard';
  prefs.iconShape=old.iconShape==='circle'?'circle':'rounded';
+ prefs.brandGlow=typeof old.brandGlow==='boolean'?old.brandGlow:true;
  prefs.showDockLabels=typeof old.showDockLabels==='boolean'?old.showDockLabels:true;
  prefs.brand=typeof old.brand==='boolean'?old.brand:true;
  prefs.rotation=[0,15,30,60].indexOf(old.rotation)>=0?old.rotation:0;
@@ -297,8 +308,36 @@ function boot(payload){
  refreshIconPacks();render();scheduleRotation();
 }
 window.bootNative=boot;
+// Known brands keep their colour even when an icon pack changes the artwork.
+// Other apps use a one-time colour sample supplied by Android, or a neutral rim.
+function appGlow(app){
+ var id=String(app.id||'').toLowerCase(),name=String(app.name||'').toLowerCase();
+ var brands=[
+ [/^(com\.netflix\.)|\bnetflix\b/,'229,9,20'],
+ [/^(com\.spotify\.)|\bspotify\b/,'29,185,84'],
+ [/^(com\.playstation\.|com\.grill\.remoteplay)|\b(playstation|psplay|pxplay)\b/,'0,112,255'],
+ [/^(com\.google\.android\.youtube)|\byoutube\b/,'255,32,32'],
+ [/^(com\.amazon\.amazonvideo)|\bprime video\b/,'0,168,225'],
+ [/^(com\.disney\.)|\bdisney\+?/,'50,114,255'],
+ [/^(com\.apple\.atve)|\bapple tv\b/,'218,231,246'],
+ [/^(ch\.protonvpn\.)|\bproton vpn\b/,'143,104,255'],
+ [/^(ar\.tvplayer\.)|\btivimate\b/,'0,174,239'],
+ [/^(tv\.twitch\.)|\btwitch\b/,'145,70,255'],
+ [/^(com\.plexapp\.)|\bplex\b/,'229,160,13'],
+ [/^(org\.xbmc\.)|\bkodi\b/,'23,178,231'],
+ [/^(org\.videolan\.)|\bvlc\b/,'255,136,0'],
+ [/^(com\.microsoft\.xbox)|\bxbox\b/,'16,186,44'],
+ [/^(com\.valvesoftware\.)|\bsteam\b/,'40,154,255'],
+ [/^(com\.roblox\.)|\broblox\b/,'0,162,255']
+ ];
+ for(var i=0;i<brands.length;i++)if(brands[i][0].test(id+' '+name))return brands[i][1];
+ var accent=String(app.accent||'');
+ return /^(?:\d{1,3},){2}\d{1,3}$/.test(accent)&&accent.split(',').every(function(n){return Number(n)<=255})?accent:'210,225,240';
+}
+function applyAppGlow(item,app){item.style.setProperty('--app-glow',appGlow(app))}
 function createTile(app,i){
  var item=document.createElement('button');item.className='tile'+(mode==='home'&&navArea==='favourites'&&i===homeIndex?' focused':'')+(reordering&&i===homeIndex?' moving':'');
+ applyAppGlow(item,app);
  item.setAttribute('aria-label',app.name);item.title=app.name;
  item.appendChild(appIcon(app,'symbol'));
  var name=document.createElement('span');name.className='name';name.textContent=app.name;item.appendChild(name);
@@ -348,6 +387,7 @@ function finishReorder(save){
 }
 function activateHome(id){openApp(id)}
 function renderHome(){
+ document.documentElement.classList.toggle('brandGlow',prefs.brandGlow);
  document.documentElement.style.setProperty('--app-icon-radius',prefs.iconShape==='circle'?'50%':'23%');
  applyWallpaper();$('shell').className=(prefs.layout!=='dock'?'list '+(prefs.layout==='listLeft'?'listLeft':'listRight'):'')+(prefs.brand?'':' clean')+(prefs.showDockLabels?'':' hideDockLabels')+(prefs.dockWidth==='narrow'?' narrowDock':'')+(prefs.dockHeight==='compact'?' compactDock':'')+(reordering?' reordering':'');
  ['dock','listMode'].forEach(function(id){var n=$(id);n.replaceChildren();homeItems().forEach(function(app,i){n.appendChild(createTile(app,i))})});
@@ -362,6 +402,7 @@ function renderApps(){
  var grid=$('appGrid');grid.replaceChildren();
  shown.forEach(function(app,i){
   var item=document.createElement('button');item.className='appItem'+(i===appIndex?' focused':'');
+  applyAppGlow(item,app);
   item.appendChild(appIcon(app,'appIcon'));
   var n=document.createElement('span');n.className='appName';n.textContent=app.name;
   var s=document.createElement('span');s.className='star';s.textContent=prefs.favourites.includes(app.id)?'★':'☆';

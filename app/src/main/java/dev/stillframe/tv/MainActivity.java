@@ -59,6 +59,7 @@ public class MainActivity extends Activity {
     private static final int MAX_IMPORTS = 20;
     private final Object importsLock = new Object();
     private WebView web;
+    private final Map<String,String> appAccents=new java.util.HashMap<>();
     private WallpaperSources wallpaperSources;
     private ProtonVpnShortcut protonShortcut;
     private NatureWallpapers natureWallpapers;
@@ -212,6 +213,9 @@ public class MainActivity extends Activity {
                 appEntries.put(pkg, info);
                 JSONObject app = new JSONObject();
                 app.put("id", pkg);
+                String accent=appAccents.get(pkg);
+                if(accent==null){try{accent=AppAccent.sample(info.loadIcon(pm));}catch(Exception ignored){accent="210,225,240";}appAccents.put(pkg,accent);}
+                app.put("accent",accent);
                 CharSequence name = info.loadLabel(pm);
                 app.put("name", name == null ? pkg : name.toString());
                 // Informational label only. A pre-installed app may still be used daily.
